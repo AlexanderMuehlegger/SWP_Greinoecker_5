@@ -21,15 +21,11 @@ function change_team_player(e) {
     let player_sel = e.target;
     let v = player_sel.value;
     let t = player_sel.options[player_sel.selectedIndex].text;
-    if(t === "Choose..."){
-        player_img.src = ""
-
-        return;
-    }
+    if(t === "Choose...")
+        return
 
     let curr_player = players.find(p => p.Name === t);
     console.log(curr_player.PhotoUrl);
-    player_img.src = curr_player.PhotoUrl;
 
     current_player = curr_player
     changeData(curr_player)
@@ -44,11 +40,6 @@ function initPage() {
     p_team.innerText = teams.length
     players.forEach(d => d.power = Math.round(Math.random()*(max_power-min_power)+min_power))
     players.forEach(d => d.picked = false)
-}
-
-
-function setImage(url){
-
 }
 
 function changeSelector(){
@@ -84,6 +75,13 @@ function changeData(player){
 }
 
 function addToTeam(team, player){
+
+    if(player == undefined){
+        alert("No Player selected!")
+        return
+    }
+
+
     let index = getNextIndex(team)
 
     if(index > 5 && teamFull(team)){
@@ -91,7 +89,6 @@ function addToTeam(team, player){
         return 120 //Error-Code 120 = Team Cap reached
     }
 
-    console.warn(player)
     let player_container = document.querySelector(".player_container.player" + team     )
     let charEl = player_container.querySelector(".card.char" + index)
     let paras = charEl.querySelectorAll("p")
@@ -214,8 +211,6 @@ cards.forEach(p => p.addEventListener('click', (event) => {
     
 }))
 
-
-let player_img = document.getElementById("player_img");
 
 let old_player = 0
 

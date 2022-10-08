@@ -21,6 +21,8 @@ body {
     padding: 2rem;
     display: flex;
     justify-content: space-between;
+    width: 50%;
+    min-width: 1000px
 }
 p {
     display: inline-block;
@@ -151,4 +153,12 @@ p.name {
     height: 250px; 
     display: flex;
     justify-content: space-between; 
+}
+
+.comment_bold {
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 1rem;
+    margin-left: 3rem;
 }
