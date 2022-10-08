@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer"/>
+    <title>Example 05: OO-Programming</title>
+     <script src="data/teams.js"></script>
+     <script src="data/players.js"></script>
+     <link rel="stylesheet" href="style.css">
+     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+        </style>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+Press <b>F12</b> to see the results
+<br/><br/><br/><br/><br/>
+
+<div class="selector_container">
+    <div>
+        <div class="team_sel">
+            <select id="teams" onchange="change_teams">
+            </select>
+            <p id="team_count"></p>
+            <p>Teams</p>
+        </div>
+        
+        <div class="player_sel">
+            <select id="team_members" onchange="change_teams">
+                <option value="0">Choose...</option>
+            </select>
+            <p id="player_count"></p>
+            <p>Players</p>
+        </div>
+        <button class="choose player1" id="select_player1"> Player 1
+        </button>
+        <button class="choose player2" id="select_player2">Player 2</button>
+    </div>
+    <div class="info_box">
+        <div class="info1">
+            <p class="name">Name: M. Neuer</p><br>
+            <p class="team">Team: FC Byern München</p><br>
+            <p class="age">Age: 34</p><br>
+            <p class="stamina">Stamina: 43</p><br>
+        </div>
+        <div class="info2">
+            <p class="valueEUR">Value(€): 13.500.000</p><br>
+            <p class="height">Height(cm): 193</p><br>
+            <p class="strength">Strength: 80</p><br>
+            <p class="potential">Potential: 90</p><br>
+        </div>
+    </div>
+</div>
+
+<div class="player_wrapper">
+    <div class="player_container player1">
+    <span class="header_wrapper">
+        <span>
+            <h2>Team 1</h2>
+            <p class="card_par">(Max 5)</p>
+        </span>
+        <h3 class="selection_indicator" active="false">Selecting</h3>
+    </span>
+    <p id="team_power1"></p>
+
+    <div class="card char1" filled="false">
+        <div class="p_wrapper">
+            <p class="name"></p>
+            <p></p>
+        </div>
+        <p class="power"></p>
+        <img class="face" >
+    </div>
+    <div class="card char2" filled="false">
+        <div class="p_wrapper">
+            <p class="name"></p>
+            <p></p>
+        </div>
+        <p class="power"></p>
+        <img class="face" >
+
+    </div>
+    <div class="card char3" filled="false">
+        <div class="p_wrapper">
+            <p class="name"></p>
+            <p></p>
+        </div>
+        <p class="power"></p>
+        <img class="face" >
+
+    </div>
+    <div class="card char4" filled="false">
+        <div class="p_wrapper">
+            <p class="name"></p>
+            <p></p>
+        </div>
+        <p class="power"></p>
+        <img class="face" >
+
+    </div>
+    <div class="card char5" filled="false">
+        <div class="p_wrapper">
+            <p class="name"></p>
+            <p></p>
+        </div>
+        <p class="power"></p>
+        <img class="face" >
+
+    </div>
+</div>
+
+<div class="player_container player2">
+    <span class="header_wrapper">
+        <span>
+            <h2>Team 2</h2>
+            <p class="card_par">(Max 5)</p>
+        </span>
+        <h3 class="selection_indicator" active="false">Selecting</h3>
+    </span>
+    <p id="team_power2"></p>
+
+    <div class="card char1" filled="false">
+        <div class="p_wrapper">
+            <p class="name"></p>
+            <p></p>
+        </div>
+        <p class="power"></p>
+        <img class="face">
+    </div>
+    <div class="card char2" filled="false">
+        <div class="p_wrapper">
+            <p class="name"></p>
+            <p></p>
+        </div>
+        <p class="power"></p>
+        <img class="face">
+    </div>
+    <div class="card char3" filled="false">
+        <div class="p_wrapper">
+            <p class="name"></p>
+            <p></p>
+        </div>
+        <p class="power"></p>
+        <img class="face">
+    </div>
+    <div class="card char4" filled="false">
+        <div class="p_wrapper">
+            <p class="name"></p>
+            <p></p>
+        </div>
+        <p class="power"></p>
+        <img class="face">
+    </div>
+    <div class="card char5" filled="false">
+        <div class="p_wrapper">
+            <p class="name"></p>
+            <p></p>
+        </div>
+        <p class="power"></p>
+        <img class="face">
+    </div>
+</div>
+</div>
+
+<img id="player_img">
+</img>
+
+<img url="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg" alt="">
+
+<script src="/index.js"></script>
+</body>
+</html>
