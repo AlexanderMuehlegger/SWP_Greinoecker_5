@@ -6,9 +6,9 @@ const ENTITY_TYPES = Object.freeze({
 })
 
 const CONSTANTS = Object.freeze({
-    PLAYER_IMAGE: "./assets/img/face-cool.png",
+    PLAYER_IMAGE: "./assets/img/face-monkey.png",
     ENEMY_IMAGE: "./assets/img/face-devilish.png",
-    BONUS_IMAGE: "./assets/img/face-monkey.png",
+    BONUS_IMAGE: "./assets/img/face-cool.png",
     UNDEFINED_IMAGE: "./assets/img/undefined.png"
 })
 
@@ -18,39 +18,21 @@ const GAME_STATUS = Object.freeze({
     STOPPED: "Stopped"
 })
 
-var player
-var game_status = GAME_STATUS.STOPPED
-
-var canvas = document.getElementById("field")
-var _ctx = canvas.getContext("2d")
-
+var game
 
 function start() {
-    player = new Entity(new Vector2D(100, 100), ENTITY_TYPES.PLAYER, 0, 0)
-    game_status = GAME_STATUS.RUNNING
-    draw()
+    let canvas = document.getElementById("field")
+    let ctx = canvas.getContext("2d")
+    game = new Game(canvas.width, canvas.height, new Vector2D(100, 100))
+    
+    game.game_status = GAME_STATUS.RUNNING
+
+    game.update()
+    game.draw(ctx)
 }
 
 function stop() {
-    game_status = GAME_STATUS.STOPPED
-}
-
-function draw(){
-    player.draw(_ctx)
-    if(game_status === GAME_STATUS.RUNNING)
-        window.requestAnimationFrame(draw)
-    
-    if(game_status === GAME_STATUS.STOPPED)
-        reset()
-}
-
-function update(){
-
-    window.requestAnimationFrame(update)
-}
-
-function reset(){
-
+    game.game_status = GAME_STATUS.STOPPED
 }
 
 function getImage(type){
@@ -81,16 +63,68 @@ class Game {
 
     game_config = Object.freeze({
         MAX_ENEMIES: 100,
-        MAX_BONUS: 25,
+        MAX_BONUS_ENTITIES: 25,
+        MAX_ENTITIES: 125,
         BONUS_REWARD: 100,
         MAX_SPEED: 2,
-        
+        BONUS_SPAWN_CHANCE: .1,
+        DEFAULT_PLAYER_SPAWN: new Vector2D(100, 100)
     })
 
-    constructor(){
+    #entities = []
+
+    game_status = GAME_STATUS.STOPPED
+
+    constructor(width, height, player_spawn=DEFAULT_PLAYER_SPAWN){
+        this.player_spawn = player_spawn
+        this.width = width
+        this.height = height
+        this.#entities.push(new Entity(this.player_spawn, ENTITY_TYPES.PLAYER, 0, new Vector2D(0,0)))
+    }
+
+    #init(){
 
     }
 
+    update() {
+        this.spawnEntities()
+        this.handleEntities()
+
+        this.#entities.forEach((entity) => {
+            entity.update()
+        })
+
+        if(this.game_status == GAME_STATUS.RUNNING)
+            window.requestAnimationFrame(this.update.bind(this))
+    }
+
+    draw(ctx){
+        console.log(ctx)
+        console.log("öalkdjf")
+        this.#entities.forEach((entity) => {
+            entity.draw(ctx)
+        })
+        if(this.game_status == GAME_STATUS.RUNNING)
+            window.requestAnimationFrame(this.draw.bind(this))
+    }
+
+    //TODO: Spawn Entities
+    spawnEntities() {
+        if(this.#entities.length >= this.game_config.MAX_ENTITIES)
+            return
+        
+        
+    }
+
+    //TODO: Handle Entities
+    handleEntities() {
+        
+    }
+
+    reset(ctx) {
+        this.#entities = []
+        ctx.clearRect(0, 0, this.width, this.height)
+    }
 
 }
 
@@ -105,8 +139,6 @@ class Entity {
     }
 
     #init(){
-        alert("helloooo")
-        this.draw(_ctx)
     }
     
     update(){
@@ -114,6 +146,7 @@ class Entity {
     }
 
     draw(ctx){
+        
         ctx.drawImage(this.image, this.position.x, this.position.y)
     }
 }
