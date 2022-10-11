@@ -21,9 +21,12 @@ const GAME_STATUS = Object.freeze({
 var game
 
 function start() {
+    let enemy = new Enemy(new Vector2D(0,0), new Vector2D())
+    console.log(enemy)
     let canvas = document.getElementById("field")
     let ctx = canvas.getContext("2d")
-    game = new Game(canvas.width, canvas.height, new Vector2D(100, 100))
+
+    game = new Game(canvas.width, canvas.height, new Vector2D(100, 100), ctx)
     
     game.game_status = GAME_STATUS.RUNNING
 
@@ -33,30 +36,8 @@ function start() {
 
 function stop() {
     game.game_status = GAME_STATUS.STOPPED
+    game.reset()
 }
-
-function getImage(type){
-    let img = new Image()
-
-    switch(type){
-        case ENTITY_TYPES.PLAYER:
-            img.src = CONSTANTS.PLAYER_IMAGE
-            break
-        case ENTITY_TYPES.ENEMY:
-            img.src = CONSTANTS.ENEMY_IMAGE
-            break
-        case ENTITY_TYPES.Bonus:
-            img.src = CONSTANTS.BONUS_IMAGE
-            break
-        case ENTITY_TYPES.UNDEFINED:
-            img.src = CONSTANTS.UNDEFINED_IMAGE
-            break
-    }
-
-    return img
-
-}
-
 
 
 class Game {
@@ -75,11 +56,12 @@ class Game {
 
     game_status = GAME_STATUS.STOPPED
 
-    constructor(width, height, player_spawn=DEFAULT_PLAYER_SPAWN){
+    constructor(width, height, player_spawn=DEFAULT_PLAYER_SPAWN, ctx){
         this.player_spawn = player_spawn
         this.width = width
         this.height = height
-        this.#entities.push(new Entity(this.player_spawn, ENTITY_TYPES.PLAYER, 0, new Vector2D(0,0)))
+        this.ctx = ctx
+        this.#entities.push(new Player(this.player_spawn, new Vector2D(1,0)))
     }
 
     #init(){
@@ -98,11 +80,9 @@ class Game {
             window.requestAnimationFrame(this.update.bind(this))
     }
 
-    draw(ctx){
-        console.log(ctx)
-        console.log("öalkdjf")
+    draw(){
         this.#entities.forEach((entity) => {
-            entity.draw(ctx)
+            entity.draw(this.ctx)
         })
         if(this.game_status == GAME_STATUS.RUNNING)
             window.requestAnimationFrame(this.draw.bind(this))
@@ -121,9 +101,9 @@ class Game {
         
     }
 
-    reset(ctx) {
+    reset() {
         this.#entities = []
-        ctx.clearRect(0, 0, this.width, this.height)
+        this.ctx.clearRect(0, 0, this.width, this.height)
     }
 
 }
@@ -134,7 +114,6 @@ class Entity {
         this.type = type
         this.acc = acc
         this.speed = speed
-        this.image = getImage(type)
         this.#init()
     }
 
@@ -142,15 +121,40 @@ class Entity {
     }
     
     update(){
+        console.log(this.position, this.speed)
         this.position.add(this.speed)
     }
 
     draw(ctx){
-        
         ctx.drawImage(this.image, this.position.x, this.position.y)
     }
 }
 
+class Enemy extends Entity {
+    constructor(position, speed) {
+        super(position, ENTITY_TYPES.ENEMY, undefined, speed)
+        this.image = new Image()
+        this.image.src=CONSTANTS.ENEMY_IMAGE
+    }
+
+
+}
+
+class Player extends Entity {
+    constructor (position, speed){
+        super(position, ENTITY_TYPES.ENEMY, undefined, speed)
+        this.image = new Image()
+        this.image.src=CONSTANTS.PLAYER_IMAGE
+    }
+}
+
+class Bonus extends Entity {
+    constructor(position, speed){
+        super(position, ENTITY_TYPES.ENEMY, undefined, speed)
+        this.image = new Image()
+        this.image.src=CONSTANTS.BONUS_IMAGE
+    }
+}
 
 class Vector2D{
     constructor(x=0, y=0){
