@@ -1,17 +1,34 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Example 03: Arrays</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<button onclick="start()">Start!</button>
-<button onclick="stop()">Stop!</button>
-<canvas id="field" width="1024" height="1024"  style="border:1px solid #000000;"></canvas>
+    <div>
+        <button onclick="start()">Start!</button>
+        <button onclick="stop()">Stop!</button>
+        <canvas id="field" width="1024" height="1024" style="border:1px solid #000000;"></canvas>
+    </div>
+    <div class="scores">
+        <h1 id="score">Score: 10</h1>
+        <h1 id="health">Health: 100%</h1>
+        <h1 id="time">0s</h1>
+        <h1 id="lost" visible="false">You Have LOST</h1>
+    </div>
 
-<script src="index.js">
-</script>
+
+    <script src="index.js"> </script>
+    <script type="text/javascript" src="./assets/js/utils.js"> </script>
+    <script type="text/javascript" src="./assets/js/Entity.js"> </script>
+    <script type="text/javascript" src="./assets/js/Enemy.js"> </script>
+    <script type="text/javascript" src="./assets/js/Bonus.js"> </script>
+    <script type="text/javascript" src="./assets/js/Player.js"> </script>
+    <script type="text/javascript" src="./assets/js/Game.js"> </script>
 </body>
+
 </html>

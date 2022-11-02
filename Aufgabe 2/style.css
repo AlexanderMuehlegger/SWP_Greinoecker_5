@@ -1,0 +1,38 @@
+div {
+    display: inline-block
+}
+.scores {
+    position: absolute;
+}
+
+.scores h1 {
+    margin-left: 2rem
+}
+
+#lost[visible='true']{
+    color: red;
+    animation: loosing 1s infinite;
+}
+
+#lost[visible='false']{
+    display: none
+}
+
+@keyframes loosing {
+    0% {
+        margin-left: 2rem
+    }
+    
+    25%{
+        margin-left: 4rem
+    }
+    50%{
+        margin-left: 6rem
+    }
+    75% {
+        margin-left: 4rem
+    }
+    100% {
+        margin-left: 2rem
+    }
+}

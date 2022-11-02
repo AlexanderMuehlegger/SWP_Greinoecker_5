@@ -1,4 +1,4 @@
-class Entity {
+ class Entity {
     constructor(position=new Vector2D(), type=ENTITY_TYPES.UNDEFINED, acc=new Vector2D(), speed=new Vector2D(), max_ticks){
         this.position = position
         this.type = type
