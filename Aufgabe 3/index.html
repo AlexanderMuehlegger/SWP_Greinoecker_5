@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div>
+            <button @click="onClick" v-for="letter in letters" class="btn letter">{{letter}}</button>
+        </div>
+        <button @click="reset" class="btn restart">Restart</button>
+
+        <div class="words">
+            <p v-if="cheatMode">{{solution}}</p>
+            <p class="search">{{searchProg}}</p>
+        </div>
+
+        <div class="img-wrapper">
+            <div class="img-container">
+                <img  v-show="errCount>=0" :src="imgs[errCount]" alt="">
+            </div>
+            <p class="score">Score: {{score}}</p>
+            <div class="highscore-table">
+                <table>
+                    <tr>
+                        <th>Highscore</th>
+                        <th>Cheat Mode</th>
+                    </tr>
+                    <tr v-for="highscorerow in highscoreTable">
+                        <td>{{highscorerow.score}}</td>
+                        <td>{{highscorerow.cheatMode}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div v-show="lost" class="lost">
+            <h1>You Lost</h1>
+        </div>
+        <div v-show="won" class="won">
+            <h1>You Won!</h1>
+        </div>
+    </div>
+</body>
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="/data/wordlist.js" type="module"></script>
+<script src="index.js" type="module"></script>
+
+</html>

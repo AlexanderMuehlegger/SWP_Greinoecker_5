@@ -1,0 +1,92 @@
+[v-cloak] {
+    display: none;
+}
+
+#app {
+    margin: 2rem
+}
+
+.search {
+    letter-spacing: .4rem
+}
+
+.lost h1 {
+    color: red
+}
+
+.won h1 {
+    color: green
+}
+.btn {
+    border: 0;
+    outline: 0;
+    transition: transform ease-out 100ms
+}
+
+.restart {
+    height: 2.5rem;
+    width: 8rem;
+    background: #d66d6d;
+    color: white;
+    font-size: 18px;
+    border-radius: 1rem;
+    margin-block: 1rem
+}
+
+.restart:hover {
+    transform: scale(1.05)
+}
+
+.letter {
+    margin-inline: .5rem;
+    font-size: 15px;
+    background: #54916d;
+    color: white;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 10px;
+
+}
+
+.letter:hover {
+    transform: scale(1.085);
+}
+
+.words {
+    margin-left: 2rem;
+}
+.words > p {
+    font-size: 22px;
+}
+
+.img-container {
+    width: 200px;
+    min-height: 1px
+}
+
+.img-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.score {
+    font-size: 25px;
+    margin: 0;
+    margin-left: 3rem;
+}
+.highscore-table {
+    margin-left: 10rem;
+}
+table, tr, td, th {
+    border: 1px solid black;
+    border-collapse: collapse
+}
+
+th {
+    padding-inline: 2.5rem
+}
+
+td, textPath {
+    padding-inline: 5rem
+}
+
