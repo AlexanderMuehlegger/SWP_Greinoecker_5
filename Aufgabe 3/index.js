@@ -47,7 +47,9 @@ var app = createApp({
             lost: false,
             won: false,
             score: 0,
-            highscoreTable: []
+            highscoreTable: [],
+            timerInterval: "",
+            time: 0
         }
     },
     methods: {
@@ -66,14 +68,14 @@ var app = createApp({
                 return
             }
             
-            this.calcScore()
+            this.calcScore(false)
 
             occurences.forEach((element) => {
                 this.searchProg = this.searchProg.replaceAt(element, char)
             })
              
             this.letters.splice(this.letters.indexOf(char.toUpperCase()), 1)
-            this.calcScore()
+            this.calcScore(false)
             if(this.solution === this.searchProg){
                 this.won = true
 
@@ -103,6 +105,7 @@ var app = createApp({
             this.score = 0
             this.letters = this.createLetters()
             console.log(this.highscoreTable)
+            this.time = 0
         },
         addMistake() {
             if(this.errCount >= IMG_SIZE){
@@ -111,15 +114,24 @@ var app = createApp({
             }
             this.errCount++
         },
-        calcScore(){
+        calcScore(fromtime){
             let score = this.score
-            score += 4
-            score += this.solution.length * .25
-            this.score = score
+            if(!fromtime){
+                score += this.solution.length * .25
+                score += 4
+            }else{
+                score += this.time*.075
+            }
+
+            this.score = Math.round(score*100)/100
             
         },
         createLetters() {
             return Array.from(Array(26)).map((e, i) => String.fromCharCode(i + 65))
+        },
+        refreshTime(){
+            this.time++
+            this.calcScore(true)
         }
     },
     mounted() {
@@ -143,5 +155,7 @@ var app = createApp({
         if(highScores != null && highScores.length > 0){
             this.highscoreTable = JSON.parse(highScores)
         }
+
+        this.timerInterval = setInterval(this.refreshTime, 1000)
     }
 }).mount('#app')
