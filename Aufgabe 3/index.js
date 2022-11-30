@@ -69,7 +69,7 @@ var app = createApp({
             }
             
             this.calcScore(false)
-
+            
             occurences.forEach((element) => {
                 this.searchProg = this.searchProg.replaceAt(element, char)
             })
