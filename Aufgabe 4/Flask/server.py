@@ -7,6 +7,7 @@ from flask_restful import Resource, Api
 from dataclasses import dataclass
 import json
 from flask_cors import CORS, cross_origin
+from datetime import datetime
 
 Base = declarative_base()  # Basisklasse aller in SQLAlchemy verwendeten Klassen
 metadata = Base.metadata
@@ -30,6 +31,21 @@ class Catalog(Base):
     id = Column(Integer, primary_key=True)
     description = Column(Text)
     thumb = Column(Text)
+
+@dataclass
+class History(Base):
+    __tablename__ = 'history'
+    id: int
+    catalog_id: int
+    changed_desc: str
+    date: str
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    catalog_id= Column(Integer)
+    changed_desc = Column(Text)
+    date = Column(Text)
+
+metadata.create_all(engine)
 
 class CatalogREST(Resource):
     def get(self, id):
@@ -55,8 +71,12 @@ class CatalogREST(Resource):
         if info is None:
             return jsonify({'message': 'object with id %d does not exist' % id})
         description = request.json['params']['description']
+
+        hist = History(catalog_id=id, changed_desc = description, date=getCurrentTime())
+
         info.description = description
         db_session.add(info)
+        db_session.add(hist)
         db_session.flush()
         return jsonify({'message': 'object with id %d modified' % id})
 
@@ -65,12 +85,29 @@ class CatalogREST(Resource):
         infos = Catalog.query.filter(Catalog.description.contains(q)).all()
         return  jsonify(infos)
 
+    @app.route('/history/<id>')
+    def get_history(id):
+        try:
+            id = int(id)
+        except:
+            return jsonify({'ERROR': 'Id must be a Number'})
+        if(id == -1):
+            histories = History.query.all()
+        else:
+            histories = History.query.filter(History.catalog_id == id).all()
+        return jsonify(histories)
+
+
 api.add_resource(CatalogREST, '/cat-item/<int:id>')
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     print("Shutdown Session")
     db_session.remove()
+
+def getCurrentTime():
+    now = datetime.now()
+    return now.strftime("%d.%m.%Y %H:%M:%S")
 
 if __name__ == '__main__':
     app.run(debug=True)
