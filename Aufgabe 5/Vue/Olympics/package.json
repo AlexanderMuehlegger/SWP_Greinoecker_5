@@ -15,7 +15,6 @@
     "plotly": "^1.0.6",
     "uuid": "^9.0.0",
     "vue": "^3.2.45",
-    "vue-plotly": "^1.1.0",
     "vue3-plotly": "^0.0.5"
   },
   "devDependencies": {
