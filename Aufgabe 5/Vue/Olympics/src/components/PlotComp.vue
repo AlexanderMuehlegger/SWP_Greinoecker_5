@@ -1,43 +1,38 @@
 <template>
-    <VuePlotly :data="data" :layout="layout"/>
+    <VuePlotly className="sm:max-w-full lg:max-w-[50%]" :data="data" :layout="layout" :display-mode-bar="false"/>
 </template>
 
 <script>
-import { VuePlotly } from 'vue-plotly'
+import { VuePlotly } from 'vue3-plotly'
 export default{
-    component: {
+    components: {
         VuePlotly
     },
     props: ['xValue', 'yValues', 'type'],
     data() {
         return{
-            // data: [],
-            // layout: {
-            //     title: 'Male Female'
-            // }
-            data:[{
-                x: [1,2,3,4],
-                y: [10,15,13,17],
-                type:"scatter"
-            }],
-            layout:{
-                title: "My graph"
+            data: [],
+            layout: {
+                title: 'Male Female'
             }
         }
     },
     beforeMount(){
-        return;
         let data = []
         let x = 0
+        console.log(this.yValues)
         for(let yValue in this.yValues){
             yValue = this.yValues[yValue]
+            let trace_name = yValue[0]
+            yValue = yValue.slice(1)
+            console.log(yValue)
             data.push({
                 x: this.xValue,
                 y: yValue,
-                type: this.type
+                type: this.type,
+                name: trace_name
             })
         }
-        console.log(data)
         this.data = data
     }
 }
