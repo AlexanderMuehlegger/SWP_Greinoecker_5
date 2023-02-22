@@ -8,32 +8,50 @@ export default{
     components: {
         VuePlotly
     },
-    props: ['xValue', 'yValues', 'type'],
+    props: ['xValue', 'yValues', 'type', 'type_', 'title'],
     data() {
         return{
             data: [],
             layout: {
-                title: 'Male Female'
+                title: ''
             }
         }
     },
     beforeMount(){
         let data = []
-        let x = 0
-        console.log(this.yValues)
-        for(let yValue in this.yValues){
-            yValue = this.yValues[yValue]
-            let trace_name = yValue[0]
-            yValue = yValue.slice(1)
-            console.log(yValue)
+        if(this.type_ != 'height'){
+            let x = 0
+            this.yValues.forEach(yValue=> {
+                console.log(yValue)
+                let trace_name = yValue[0]
+                yValue = yValue.slice(1)
+                data.push({
+                    x: this.xValue,
+                    y: yValue,
+                    type: this.type,
+                    name: trace_name
+                })
+            })
+            
+        }else if(this.type == 'pie'){
+            data.push({
+                values: this.xValue,
+                labels: this.yValues,
+                type: this.type
+            })
+        }else{
             data.push({
                 x: this.xValue,
-                y: yValue,
+                y: this.yValues,
                 type: this.type,
-                name: trace_name
             })
         }
+        
+        
+        this.layout.title = this.title
         this.data = data
-    }
+        console.log(this.data)
+
+    },
 }
 </script>
