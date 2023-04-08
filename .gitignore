@@ -1,3 +1,5 @@
 .pdf
 .txt
 spotify_keys.js
+
+node_modules/*

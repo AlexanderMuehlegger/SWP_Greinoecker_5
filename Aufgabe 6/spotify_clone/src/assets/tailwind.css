@@ -1,0 +1,20 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@font-face {
+    font-family: Spotify;
+    src: url(./fonts/GothamBook.ttf);
+}
+
+@layer base {
+    html {
+        font-family: Spotify;
+        height: 100vh;
+    }
+    body {
+        height: 100%;
+    }
+}
